@@ -2,16 +2,20 @@
   "name": "nodejs-microservice",
   "version": "1.0.0",
   "description": "",
-  "private":true,
+  "private": true,
   "main": "index.js",
-  "workspaces":["apps/*","packages/*"],
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev:auth": "npm run dev -w auth-service"
   },
   "keywords": [],
-
   "dependencies": {
-    "express": "^5.2.1"
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "shared": "^1.0.0"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
