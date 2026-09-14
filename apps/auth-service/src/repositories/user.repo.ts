@@ -32,3 +32,16 @@ export async function findByEmail(email:string):Promise<User | null>{
 
     return result.rows[0] ?? null
 }
+
+export async function findUserById(userId:string):Promise<User| null>{
+    const result = await getPool().query<User>(
+        `
+        SELECT id, name, email, password_hash, created_at
+        FROM users
+        WHERE id = $1
+        `,
+        [userId]
+    )
+
+    return result.rows[0] ?? null
+}
