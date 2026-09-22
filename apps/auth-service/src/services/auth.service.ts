@@ -13,12 +13,13 @@ export async function register(input:RegisterInput){
     }
 
     const passwordHash = await bcrypt.hash(input.password,10)
-    const user = await createUser({name:input.name,email:input.email,passwordHash,role:'USER'})
+    const user = await createUser({name:input.name,email:input.email,password:passwordHash,role:'USER'})
     return convertToPublicUser(user)
 }
 
 export async function login(input:LoginInput){
     const user = await findByEmail(input.email)
+    console.log("Login console",user,input)
     if(!user){
         throw new AppError(401,"Invalid Email and Password")
     }

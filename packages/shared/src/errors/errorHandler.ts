@@ -9,6 +9,8 @@ export function errorHandler(err:unknown,req:Request,res:Response,next:NextFunct
         })
     }
 
+    console.log("Error in error handler",err)
+
     return res.status(500).json({
         success:false,
         message:"Internal Server error"
