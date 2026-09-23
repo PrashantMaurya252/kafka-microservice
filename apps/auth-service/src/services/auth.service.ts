@@ -1,8 +1,8 @@
-import { AppError } from "shared";
+import { AppError, signToken } from "shared";
 import { createUser, findByEmail, findUserById } from "../repositories/user.repo";
 import { LoginInput, RegisterInput } from "../schemas/auth.schema";
 import bcrypt from 'bcryptjs'
-import { convertToPublicUser, signToken } from "../utils/auth.utils";
+import { convertToPublicUser } from "../utils/auth.utils";
 
 
 

@@ -7,5 +7,5 @@ export {errorResponse,successResponse} from './response/response'
 export {validateBody} from './validation/validateBody'
 
 export type {JwtPayload,UserRole} from './auth/types'
-export {gatewayAuth} from './auth/gatewayAuth'
+export {requireGateWaySecret} from './auth/gatewayAuth'
 export {signToken,verifyToken} from './auth/jwt'

@@ -6,6 +6,7 @@ import helmet from 'helmet'
 import rateLimit from 'express-rate-limit'
 import { AppError, errorHandler, httpLogger, logger, successResponse } from 'shared'
 import { createProxyMiddleware } from 'http-proxy-middleware'
+import {gatewayAuth} from './middleware/gatewayAuth'
 
 
 config({path:resolve(process.cwd(),".env")})
@@ -34,7 +35,7 @@ app.use("/health",(req,res)=>{
 
 console.log("Auth Service URL",AUTH_SERVICE_URL)
 
-app.use("/auth",createProxyMiddleware({
+app.use("/auth",gatewayAuth,createProxyMiddleware({
     target:AUTH_SERVICE_URL,
     changeOrigin:true,
     pathRewrite:(path)=>`/auth${path}`
