@@ -13,7 +13,7 @@ export async function createUser(input:{
         `
         INSERT INTO users (name,email,password,role)
         VALUES ($1, $2, $3, $4)
-        RETURNING id, name, email, password_hash, role, created_at
+        RETURNING id, name, email, password, role, created_at
         `,
         [input.name,input.email,input.password,input.role ?? "USER"]
     )
@@ -23,7 +23,7 @@ export async function createUser(input:{
 export async function findByEmail(email:string):Promise<User | null>{
     const result = await getPool().query<User>(
         `
-        SELECT id, name, email, password_hash as password, role, created_at
+        SELECT id, name, email, password, role, created_at
         FROM users
         WHERE email = $1
         `,

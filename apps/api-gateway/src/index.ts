@@ -32,11 +32,43 @@ app.use("/health",(req,res)=>{
 
 // create proxy
 
+console.log("Auth Service URL",AUTH_SERVICE_URL)
+
 app.use("/auth",createProxyMiddleware({
     target:AUTH_SERVICE_URL,
     changeOrigin:true,
-    pathRewrite:(path)=>`/auth/${path}`
+    pathRewrite:(path)=>`/auth${path}`
+    
 }));
+
+// app.use(
+//     "/auth",
+//     createProxyMiddleware({
+//         target: AUTH_SERVICE_URL,
+//         changeOrigin: true,
+
+//         pathRewrite: (path, req) => {
+//             console.log("Proxy received path:", path);
+//             console.log("Original URL:", req);
+
+//             const newPath = `/auth${path}`;
+
+//             console.log("Proxy forwarding to:", newPath);
+
+//             return newPath;
+//         },
+
+//         on: {
+//             proxyReq: (proxyReq, req) => {
+//                 console.log(
+//                     "Proxy request:",
+//                     req.method,
+//                     proxyReq.path
+//                 );
+//             },
+//         },
+//     })
+// );
 
 
 app.use((req,res,next)=>{
