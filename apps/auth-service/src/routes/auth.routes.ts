@@ -10,7 +10,7 @@ console.log("Auth router")
 
 authRouter.post("/register",validateBody(registerSchema),authController.register)
 authRouter.post("/login",validateBody(loginSchema),authController.login)
-authRouter.post("/me",authController.getMe)
+authRouter.get("/me",authController.getMe)
 
 
 export default authRouter

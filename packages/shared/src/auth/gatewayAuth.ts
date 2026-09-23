@@ -10,6 +10,8 @@ export function requireGateWaySecret(req:Request,res:Response,next:NextFunction)
 
     const incoming = req.header("x-gateway-secret")
 
+    console.log("Incoming secret",incoming,expected)
+
     if(!incoming || incoming !== expected){
         return next(new AppError(403,"Forbidden"))
     }

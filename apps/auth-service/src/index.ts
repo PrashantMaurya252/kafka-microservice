@@ -19,7 +19,8 @@ app.get("/health",(req,res)=>{
 
 app.use("/auth",requireGateWaySecret,authRouter)
 app.use((req,res,next)=>{
-    next(new AppError(404,"Route not found"))
+    console.log("Requested path",req.path)
+    next(new AppError(404,"Route not found in auth service"))
 })
 
 app.use(errorHandler)
