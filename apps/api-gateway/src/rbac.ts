@@ -21,6 +21,15 @@ const rbacRules:RbacRule[]=[
     },
     {
         method:'POST',path:'/tasks',roles:['USER','ADMIN']
+    },
+    {
+        method:'GET',path:'/tasks',roles:['USER','ADMIN']
+    },
+    {
+        method:'GET',path:'/tasks/:id',roles:['USER','ADMIN']
+    },
+    {
+        method:'DELETE',path:'/tasks/:id',roles:['USER','ADMIN']
     }
 ]
 
