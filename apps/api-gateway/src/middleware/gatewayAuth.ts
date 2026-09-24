@@ -27,7 +27,7 @@ function attachGateSecret(req:Request){
 function requestPath(req:Request){
     const combine = `${req.baseUrl}${req.path}`
     if(combine.length > 1 && combine.endsWith("/")){
-        return combine.slice(0,1)
+        return combine.slice(0,-1)
     }
     return combine || "/"
 }

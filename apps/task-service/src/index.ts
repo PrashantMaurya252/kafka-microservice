@@ -2,6 +2,7 @@ import { config } from "dotenv";
 import express from 'express'
 import {resolve} from 'node:path'
 import {AppError, errorHandler, httpLogger, logger, requireGateWaySecret, successResponse} from 'shared'
+import taskRoutes from './routes/task.routes'
 
 
 config({path:resolve(process.cwd(),".env")})
@@ -16,6 +17,8 @@ app.use(express.json())
 app.get("/health",(req,res)=>{
     successResponse(res,{service:"task-service"})
 })
+
+app.use("/tasks",requireGateWaySecret,taskRoutes)
 
 
 app.use((req,res,next)=>{
