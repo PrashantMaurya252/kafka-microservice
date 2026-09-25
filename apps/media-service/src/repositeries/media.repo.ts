@@ -1,0 +1,17 @@
+import { getPool } from "shared";
+import { Attachments } from "../types/media.types";
+
+
+export async function createAttachments(input:{taskId:string,imageUrl:string,publicId:string,uploadedBy:string}):Promise<Attachments>{
+    const result = await getPool().query<Attachments>(
+        `
+        INSERT INTO attachments (task_id, image_url, public_id, uploaded_by)
+        VALUES($1,$2,$3,$4)
+        RETURNING id task_id, image_url, public_id, uploaded_by, created_at
+        `,
+        [input.taskId,input.imageUrl,input.publicId,input.uploadedBy]
+    )
+
+    return result.rows[0]
+
+}
