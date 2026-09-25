@@ -36,3 +36,10 @@ export async function uploadAttachment(input:{taskId:string,userId:string,role:s
 
     return convertToPublicAttachment(attachments)
 }
+
+export async function listAttachments(taskId:string,userId:string,role:string){
+    await assertTaskAccess(taskId,userId,role)
+    const rows = await mediaRepo.listByTaskId(taskId)
+
+    return rows.map(convertToPublicAttachment)
+}

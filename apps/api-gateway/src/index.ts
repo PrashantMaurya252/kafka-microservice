@@ -38,15 +38,15 @@ app.use("/health",(req,res)=>{
 console.log("Auth Service URL",AUTH_SERVICE_URL)
 
 const taskProxy = createProxyMiddleware({
-    target:AUTH_SERVICE_URL,
+    target:TASK_SERVICE_URL,
     changeOrigin:true,
-    pathRewrite:(path)=>`/auth${path}`
+    pathRewrite:(path)=>`/tasks${path}`
 })
 
 const mediaProxy = createProxyMiddleware({
     target:MEDIA_SERVICE_URL,
     changeOrigin:true,
-    pathRewrite:(path)=>`/auth${path}`
+    pathRewrite:(path)=>`/tasks${path}`
 })
 
 app.use("/auth",gatewayAuth,createProxyMiddleware({
