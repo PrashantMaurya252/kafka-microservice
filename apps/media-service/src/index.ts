@@ -2,6 +2,7 @@ import { config } from "dotenv";
 import express from 'express'
 import {resolve} from 'node:path'
 import {AppError, errorHandler, httpLogger, logger, requireGateWaySecret, successResponse} from 'shared'
+import attachmentRoutes from './routes/media.routes'
 
 
 config({path:resolve(process.cwd(),".env")})
@@ -16,6 +17,8 @@ app.use(express.json())
 app.get("/health",(req,res)=>{
     successResponse(res,{service:"media-service"})
 })
+
+app.use("/tasks",requireGateWaySecret,attachmentRoutes)
 
 app.use((req,res,next)=>{
     console.log("Requested path",req.path)

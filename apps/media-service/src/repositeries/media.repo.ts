@@ -15,3 +15,12 @@ export async function createAttachments(input:{taskId:string,imageUrl:string,pub
     return result.rows[0]
 
 }
+
+export async function findTaskAccess(taskId:string):Promise<{id:string,created_by:string} | null>{
+    const result = await getPool().query<{id:string,created_by:string}>(
+        `
+        SELECT id, created_by FROM tasks WHERE id = $1
+        `,[taskId])
+
+        return result.rows[0] ?? null
+}

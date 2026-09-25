@@ -1,5 +1,6 @@
 import type {Request,Response,NextFunction} from 'express'
-import { AppError } from 'shared'
+import { AppError, successResponse } from 'shared'
+import * as mediaService from '../services/media.service'
 
 
 function requireIdentity(req:Request){
@@ -17,6 +18,9 @@ export async function uploadAttachments(req:Request,res:Response,next:NextFuncti
     try {
         const {userId,role} = requireIdentity(req)
         const taskId = String(req.params.taskId)
+        const attachment = await mediaService.uploadAttachment({taskId,userId,role,file:req.file})
+
+        successResponse(res,{attachment},201)
     } catch (error) {
         next(error)
     }

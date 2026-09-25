@@ -30,7 +30,11 @@ const rbacRules:RbacRule[]=[
     },
     {
         method:'DELETE',path:'/tasks/:id',roles:['USER','ADMIN']
+    },
+    {
+        method:'POST',path:'/tasks/:taskId/attachments',roles:['USER','ADMIN']
     }
+
 ]
 
 function mathPath(pattern:string,actual:string):boolean{

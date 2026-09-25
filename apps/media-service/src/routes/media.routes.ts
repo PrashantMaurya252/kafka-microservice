@@ -16,10 +16,13 @@ function handleUpload(req:Request,res:Response,next:NextFunction){
             return next(err)
         }
 
-        if(typeof err === "object"){}
+        if(typeof err === "object" && err !== null && "code" in err && err.code === "LIMIT_FILE_SIZE"){
+            return next(new AppError(400,"Image must be 10mb and smaller"))
+        }
+        return next(new AppError(400,"Invalid Image Upload"))
     })
 }
 
-router.post("/:taskId/attachments",mediaController.uploadAttachments)
+router.post("/:taskId/attachments",handleUpload,mediaController.uploadAttachments)
 
 export default router
