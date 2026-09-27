@@ -2,6 +2,7 @@ import { AppError } from "shared";
 import * as mediaRepo from '../repositeries/media.repo'
 import { uploadBuffer } from "../utils/storage";
 import { convertToPublicAttachment } from "../utils/media.utils";
+import { publishMediaEvent } from "../kafka";
 
 
 
@@ -33,6 +34,8 @@ export async function uploadAttachment(input:{taskId:string,userId:string,role:s
         publicId:uplaoded.publicId,
         uploadedBy:input.userId
     })
+
+    await publishMediaEvent(input.taskId,input.userId)
 
     return convertToPublicAttachment(attachments)
 }

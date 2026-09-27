@@ -3,6 +3,8 @@ import {Kafka, logLevel, type KafkaConfig} from 'kafkajs'
 export function createKafkaClient(clientId:string,config:Partial<KafkaConfig>={}){
     const brokers = (process.env.KAFKA_BROKERS || "localhost:9092").split(",").map((broker)=>broker.trim()).filter(Boolean)
 
+    console.log("Brokers in line 6",brokers)
+
     if(brokers.length === 0){
         throw new Error("KAFKA_BROKERS are empty")
     }

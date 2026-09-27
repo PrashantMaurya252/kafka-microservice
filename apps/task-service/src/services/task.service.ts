@@ -2,6 +2,7 @@ import { createTaskInput } from "../schemas/task.schema";
 import * as taskRepo from "../repositories/task.repo"
 import { convertToPublicTask } from "../utils/task.utils";
 import { AppError } from "shared";
+import { publishTaskEvent } from "../kafka";
 
 
 export async function createTask(input:createTaskInput,userId:string){
@@ -9,6 +10,8 @@ export async function createTask(input:createTaskInput,userId:string){
         title:input.title,
         createdBy:userId
     })
+
+    await publishTaskEvent(newTask.id,userId)
 
     return convertToPublicTask(newTask)
 }

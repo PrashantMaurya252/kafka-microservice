@@ -3,6 +3,7 @@ import express from 'express'
 import {resolve} from 'node:path'
 import {AppError, errorHandler, httpLogger, logger, requireGateWaySecret, successResponse} from 'shared'
 import taskRoutes from './routes/task.routes'
+import { initKafka } from "./kafka";
 
 
 config({path:resolve(process.cwd(),".env")})
@@ -28,6 +29,16 @@ app.use((req,res,next)=>{
 
 app.use(errorHandler)
 
-app.listen(PORT,()=>{
+async function initStartup(){
+    try {
+        await initKafka()
+    } catch (error) {
+        logger.error({error},"Kafka producer init failed")
+    }
+    app.listen(PORT,()=>{
     logger.info(`Task service is now running on port ${PORT}`)
 })
+}
+
+initStartup()
+
