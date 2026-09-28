@@ -2,6 +2,7 @@ import { config } from "dotenv";
 import express from 'express'
 import {resolve} from 'node:path'
 import {AppError, errorHandler, httpLogger, logger, requireGateWaySecret, successResponse} from 'shared'
+import { startKafka } from "./services/workflow.service";
 
 
 
@@ -27,7 +28,18 @@ app.use((req,res,next)=>{
 
 app.use(errorHandler)
 
-app.listen(PORT,()=>{
+async function initStart(){
+    try {
+        await startKafka()
+    } catch (error) {
+        logger.error({error},"Kafka consumer init failed")
+    }
+    app.listen(PORT,()=>{
     logger.info(`Workflow service is now running on port ${PORT}`)
 })
+}
+
+initStart()
+
+
 
