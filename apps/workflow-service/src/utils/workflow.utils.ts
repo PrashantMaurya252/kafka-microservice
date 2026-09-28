@@ -1,7 +1,7 @@
 import { Workflow } from "./types";
 
 
-export function convertToPublicTask(workflow:Workflow){
+export function convertToPublicWorkFlow(workflow:Workflow){
     return {
         id:workflow.id,
         taskId:workflow.task_id,

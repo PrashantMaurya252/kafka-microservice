@@ -3,6 +3,7 @@ import express from 'express'
 import {resolve} from 'node:path'
 import {AppError, errorHandler, httpLogger, logger, requireGateWaySecret, successResponse} from 'shared'
 import { startKafka } from "./services/workflow.service";
+import workFlowRoutes from './routes/workflow.routes'
 
 
 
@@ -20,7 +21,7 @@ app.get("/health",(req,res)=>{
     successResponse(res,{service:"workflow-service"})
 })
 
-
+app.use(requireGateWaySecret,workFlowRoutes)
 app.use((req,res,next)=>{
     
     next(new AppError(404,"Route not found in workflow service"))
